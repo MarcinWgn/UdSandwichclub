@@ -3,6 +3,7 @@ package com.udacity.sandwichclub;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -14,6 +15,7 @@ public class DetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_POSITION = "extra_position";
     private static final int DEFAULT_POSITION = -1;
+    public static final String TAG = DetailActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,7 @@ public class DetailActivity extends AppCompatActivity {
     private void closeOnError() {
         finish();
         Toast.makeText(this, R.string.detail_error_message, Toast.LENGTH_SHORT).show();
+        Log.d(TAG,"closeOnError");
     }
 
     private void populateUI() {
