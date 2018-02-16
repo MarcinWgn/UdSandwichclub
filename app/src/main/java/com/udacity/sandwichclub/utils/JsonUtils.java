@@ -13,54 +13,54 @@ import java.util.List;
 
 public class JsonUtils {
 
-    public static final String TAG=JsonUtils.class.getSimpleName();
+    private static final String TAG = JsonUtils.class.getSimpleName();
+    private static final String NAME = "name";
+    private static final String MAIN_NAME = "mainName";
+    private static final String ALSO_KNOWN_AS = "alsoKnownAs";
+    private static final String PLACE_OF_ORIGIN = "placeOfOrigin";
+    private static final String DESCRIPTION = "description";
+    private static final String IMAGE = "image";
+    private static final String INGREDIENTS = "ingredients";
 
     public static Sandwich parseSandwichJson(String json) {
-        if(json !=  null && !json.isEmpty()){
-            Log.d(TAG,json);
+        if (json != null && !json.isEmpty()) {
+            Log.d(TAG, json);
 
             try {
                 JSONObject sandwichJSONObject = new JSONObject(json);
-                JSONObject nameJSONObject = sandwichJSONObject.getJSONObject("name");
+                JSONObject nameJSONObject = sandwichJSONObject.getJSONObject(NAME);
 
-                String mainName = nameJSONObject.getString("mainName");
-                JSONArray alsoKnownAsArray = nameJSONObject.getJSONArray("alsoKnownAs");
+                String mainName = nameJSONObject.getString(MAIN_NAME);
+                JSONArray alsoKnownAsArray = nameJSONObject.getJSONArray(ALSO_KNOWN_AS);
 
-                Log.d(TAG,"main name: "+mainName);
+                String placeOfOrigin = sandwichJSONObject.getString(PLACE_OF_ORIGIN);
 
-                String placeOfOrigin = sandwichJSONObject.getString("placeOfOrigin");
-                Log.d(TAG,"place of origin: "+placeOfOrigin);
+                String description = sandwichJSONObject.getString(DESCRIPTION);
 
-                String description = sandwichJSONObject.getString("description");
-                Log.d(TAG,"description: "+description);
+                String urlString = sandwichJSONObject.getString(IMAGE);
 
-                String urlString = sandwichJSONObject.getString( "image");
-                Log.d(TAG,"url: "+urlString);
+                JSONArray ingredientsArray = sandwichJSONObject.getJSONArray(INGREDIENTS);
 
-                JSONArray ingredientsArray = sandwichJSONObject.getJSONArray("ingredients");
-                Log.d(TAG,ingredientsArray.getString(1));
-
-
-                return new Sandwich(mainName,jsonToList(alsoKnownAsArray)
-                        ,placeOfOrigin,description,urlString,jsonToList(ingredientsArray));
+                return new Sandwich(mainName, jsonToList(alsoKnownAsArray)
+                        , placeOfOrigin, description, urlString, jsonToList(ingredientsArray));
 
             } catch (JSONException e) {
-                Log.e(TAG,e.getMessage());
+                Log.e(TAG, e.getMessage());
                 return null;
             }
-        }else return null;
+        } else return null;
     }
 
-    private static List<String> jsonToList(JSONArray array){
+    private static List<String> jsonToList(JSONArray array) {
 
         int lenght = array.length();
         List<String> stringList = new ArrayList<>(lenght);
 
-        for (int i = 0; i<lenght;i++){
+        for (int i = 0; i < lenght; i++) {
             try {
                 stringList.add(array.getString(i));
             } catch (JSONException e) {
-                Log.e(TAG,e.getMessage());
+                Log.e(TAG, e.getMessage());
                 return null;
             }
         }
